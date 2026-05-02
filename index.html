@@ -3,154 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElementalSlayers | Official Site</title>
+    <title>ElementalSlayers | Restricted Access</title>
     <style>
         :root {
-            --primary-glow: #00d4ff;
-            --secondary-glow: #ff0055;
-            --bg-dark: #0a0a0c;
-            --card-bg: #16161a;
+            --primary: #00d4ff;
+            --accent: #ff0055;
+            --bg: #0a0a0c;
         }
 
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-dark);
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg);
             color: white;
-            text-align: center;
-        }
-
-        /* Hero Section */
-        header {
-            padding: 100px 20px;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=2070');
-            background-size: cover;
-            border-bottom: 3px solid var(--primary-glow);
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px var(--primary-glow);
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: #ccc;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            margin: 20px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-
-        .discord-btn {
-            background: #5865F2;
-            color: white;
-            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
-        }
-
-        .discord-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(88, 101, 242, 0.8);
-        }
-
-        /* Video Section */
-        .content-section {
-            padding: 50px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .video-card {
-            background: var(--card-bg);
-            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
             overflow: hidden;
-            border: 1px solid #333;
-            transition: 0.3s;
         }
 
-        .video-card:hover {
-            border-color: var(--primary-glow);
-            transform: translateY(-5px);
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Hidden content style */
+        #secret-content {
+            display: none; /* Stays hidden until password is correct */
+            text-align: center;
             width: 100%;
             height: 100%;
+            overflow-y: auto;
+            padding-top: 50px;
         }
 
-        footer {
+        .gate-container {
+            text-align: center;
+            border: 2px solid var(--primary);
             padding: 40px;
-            color: #666;
-            font-size: 0.9rem;
+            border-radius: 15px;
+            background: #16161a;
+            box-shadow: 0 0 20px var(--primary);
         }
+
+        input {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: var(--primary);
+            border: none;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .congrats-msg {
+            color: #00ff88;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .link-box {
+            background: #1c1c22;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 500px;
+            border: 1px solid #333;
+        }
+
+        .btn {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .yt-btn { background: #ff0000; }
+        .discord-btn { background: #5865F2; }
+        
+        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>ElementalSlayers</h1>
-        <p class="subtitle">Official Hub for the Community & Content</p>
-        <a href="https://discord.gg/R3DfqtrFYY" class="btn discord-btn" target="_blank">Join the Discord</a>
-    </header>
+    <!-- The Password Screen -->
+    <div id="password-gate" class="gate-container">
+        <h1>ACCESS RESTRICTED</h1>
+        <p>Enter the password to enter ElementalSlayers</p>
+        <input type="password" id="passInput" placeholder="Password...">
+        <button onclick="checkPassword()">ENTER</button>
+        <p id="error" style="color: red; margin-top: 10px;"></p>
+    </div>
 
-    <main class="content-section">
-        <h2>Latest Content</h2>
-        <div class="video-grid">
-            <!-- Video 1 -->
-            <div class="video-card">
-                <div class="video-container">
-                    <!-- Replace VIDEO_ID with your actual YouTube video IDs -->
-                    <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=ElementalSlayers" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div style="padding: 15px;">
-                    <h3>Recent Uploads</h3>
-                </div>
-            </div>
+    <!-- The Secret Content (Hidden by default) -->
+    <div id="secret-content">
+        <h1 class="congrats-msg">Congratulations!</h1>
+        <p>You can now go to my channel and join the community.</p>
 
-            <!-- Video 2 -->
-            <div class="video-card">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div style="padding: 15px;">
-                    <h3>Featured Video</h3>
-                </div>
-            </div>
+        <div class="link-box">
+            <a href="https://www.youtube.com/@elementalslayers" class="btn yt-btn" target="_blank">GO TO MY YOUTUBE CHANNEL</a>
+            <a href="https://discord.gg/R3DfqtrFYY" class="btn discord-btn" target="_blank">JOIN MY DISCORD</a>
         </div>
-    </main>
+        
+        <p style="color: #666; margin-top: 50px;">Welcome to the inner circle.</p>
+    </div>
 
-    <footer>
-        &copy; 2026 ElementalSlayers. All rights reserved.
-    </footer>
+    <script>
+        function checkPassword() {
+            var password = document.getElementById("passInput").value;
+            // The password you requested
+            if (password === "iceandfire") {
+                document.getElementById("password-gate").style.display = "none";
+                document.getElementById("secret-content").style.display = "block";
+                document.body.style.overflow = "auto";
+            } else {
+                document.getElementById("error").innerHTML = "Incorrect Password. Try again!";
+            }
+        }
+
+        // Allow pressing "Enter" key to submit
+        document.getElementById("passInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        });
+    </script>
 
 </body>
 </html>
