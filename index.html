@@ -1,1 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElementalSlayers | Official Site</title>
+    <style>
+        :root {
+            --primary-glow: #00d4ff;
+            --secondary-glow: #ff0055;
+            --bg-dark: #0a0a0c;
+            --card-bg: #16161a;
+        }
 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        header {
+            padding: 100px 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            border-bottom: 3px solid var(--primary-glow);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 20px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .discord-btn {
+            background: #5865F2;
+            color: white;
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+        }
+
+        .discord-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(88, 101, 242, 0.8);
+        }
+
+        /* Video Section */
+        .content-section {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .video-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .video-card:hover {
+            border-color: var(--primary-glow);
+            transform: translateY(-5px);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        footer {
+            padding: 40px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ElementalSlayers</h1>
+        <p class="subtitle">Official Hub for the Community & Content</p>
+        <a href="https://discord.gg/R3DfqtrFYY" class="btn discord-btn" target="_blank">Join the Discord</a>
+    </header>
+
+    <main class="content-section">
+        <h2>Latest Content</h2>
+        <div class="video-grid">
+            <!-- Video 1 -->
+            <div class="video-card">
+                <div class="video-container">
+                    <!-- Replace VIDEO_ID with your actual YouTube video IDs -->
+                    <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=ElementalSlayers" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div style="padding: 15px;">
+                    <h3>Recent Uploads</h3>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-card">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div style="padding: 15px;">
+                    <h3>Featured Video</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 ElementalSlayers. All rights reserved.
+    </footer>
+
+</body>
+</html>
