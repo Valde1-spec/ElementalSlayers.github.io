@@ -1,324 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roblox Script Education Hub</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Tier Maker</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --tier-label-width: 100px;
+        }
 
-    body {
-      background: #0f0f0f;
-      color: white;
-      padding: 30px;
-    }
+        body {
+            font-family: sans-serif;
+            background-color: var(--bg-color);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
 
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+        /* Tier Container */
+        #tier-container {
+            width: 100%;
+            max-width: 800px;
+            border: 2px solid #333;
+        }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      color: #00bfff;
-    }
+        .tier-row {
+            display: flex;
+            min-height: 80px;
+            border-bottom: 1px solid #333;
+            background-color: #222;
+        }
 
-    header p {
-      color: #bbbbbb;
-    }
+        .tier-label {
+            width: var(--tier-label-width);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            padding: 5px;
+            cursor: default;
+        }
 
-    .script-box {
-      background: #1a1a1a;
-      border-radius: 16px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
+        /* Tier Colors */
+        .s-tier { background-color: #ff7f7f; }
+        .a-tier { background-color: #ffbf7f; }
+        .b-tier { background-color: #ffff7f; }
+        .c-tier { background-color: #7fff7f; }
 
-    .script-box h2 {
-      margin-bottom: 15px;
-      color: #00bfff;
-    }
+        .tier-dropzone {
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+            gap: 10px;
+        }
 
-    pre {
-      background: #101010;
-      padding: 15px;
-      border-radius: 12px;
-      overflow-x: auto;
-      color: #00ff99;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+        /* Draggable Items */
+        .item-bank {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 800px;
+            min-height: 100px;
+            background-color: #333;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-radius: 8px;
+        }
 
-    code {
-      white-space: pre-wrap;
-    }
+        .draggable {
+            width: 60px;
+            height: 60px;
+            background-color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            user-select: none;
+            font-size: 12px;
+            border: 2px solid #fff;
+            text-align: center;
+        }
 
-    .warning {
-      background: #222;
-      border-left: 5px solid orange;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 30px;
-      color: #ddd;
-    }
+        .draggable:active {
+            cursor: grabbing;
+        }
 
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #888;
-      font-size: 0.9rem;
-    }
-  </style>
+        .dragging {
+            opacity: 0.5;
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>Roblox Script Education Hub</h1>
-    <p>Learn Lua scripting for Roblox Studio</p>
-  </header>
+    <h1>Custom Tier List</h1>
 
-  <div class="warning">
-    <strong>hello</strong> These scripts are new so may be broken.
-  </div>
+    <div id="tier-container">
+        <div class="tier-row">
+            <div class="tier-label s-tier">S</div>
+            <div class="tier-dropzone"></div>
+        </div>
+        <div class="tier-row">
+            <div class="tier-label a-tier">A</div>
+            <div class="tier-dropzone"></div>
+        </div>
+        <div class="tier-row">
+            <div class="tier-label b-tier">B</div>
+            <div class="tier-dropzone"></div>
+        </div>
+        <div class="tier-row">
+            <div class="tier-label c-tier">C</div>
+            <div class="tier-dropzone"></div>
+        </div>
+    </div>
 
-  <div class="script-box">
-    <h2>My Script New</h2>
+    <h3>Items</h3>
+    <div class="item-bank tier-dropzone" id="bank">
+        <div class="draggable" draggable="true">Pizza</div>
+        <div class="draggable" draggable="true">Tacos</div>
+        <div class="draggable" draggable="true">Sushi</div>
+        <div class="draggable" draggable="true">Burgers</div>
+        <div class="draggable" draggable="true">Salad</div>
+    </div>
 
-    <pre><code>
-local P, U, R, L = game:GetService("Players"), game:GetService("UserInputService"), game:GetService("RunService"), game:GetService("Lighting")
-local lp = P.LocalPlayer
-local mouse = lp:GetMouse()
-local g = Instance.new("ScreenGui", lp:WaitForChild("PlayerGui"))
-g.Name = "ULTIMATE_GENIUS_SUPREME"
-g.ResetOnSpawn = false
+    <script>
+        const draggables = document.querySelectorAll('.draggable');
+        const dropzones = document.querySelectorAll('.tier-dropzone');
 
-local Neon = Color3.fromRGB(0, 255, 255)
-local BG = Color3.fromRGB(10, 10, 10)
-local active = true
-local lastPos = nil
-local safePlatform = nil
+        draggables.forEach(draggable => {
+            // Start Dragging
+            draggable.addEventListener('dragstart', () => {
+                draggable.classList.add('dragging');
+            });
 
-local function round(obj, amt)
-local c = Instance.new("UICorner", obj)
-c.CornerRadius = UDim.new(0, amt or 8)
-end
+            // End Dragging
+            draggable.addEventListener('dragend', () => {
+                draggable.classList.remove('dragging');
+            });
+        });
 
-local function createLabel(parent, text, pos, size, color)
-local l = Instance.new("TextLabel", parent)
-l.Size, l.Position, l.Text, l.TextColor3 = size, pos, text, color or Color3.new(1,1,1)
-l.BackgroundTransparency, l.TextScaled, l.ZIndex, l.Font = 1, true, parent.ZIndex + 1, Enum.Font.GothamBold
-return l
-end
-
--- [[ MAIN MENU ]] --
-local f = Instance.new("Frame", g)
-f.Size, f.Position, f.BackgroundColor3, f.Visible = UDim2.new(0, 300, 0, 680), UDim2.new(0.5, -150, 0.4, -340), BG, true
-f.Active, f.Draggable, f.ZIndex = true, true, 5 round(f)
-local fO = Instance.new("Frame", f) fO.Size, fO.Position, fO.ZIndex, fO.BackgroundColor3 = UDim2.new(1,4,1,4), UDim2.new(0,-2,0,-2), 4, Neon round(fO)
-
--- [[ HEADER & CREDITS UPDATED ]] --
-local header = Instance.new("Frame", f)
-header.Size, header.Position, header.BackgroundColor3, header.ZIndex = UDim2.new(1, 0, 0, 70), UDim2.new(0,0,0,0), Color3.fromRGB(15,15,15), 6 round(header)
-
--- Hacker Mask Icon and Full Menu Title
-local logo = createLabel(header, "🎭", UDim2.new(0, 10, 0, 10), UDim2.new(0, 50, 0, 50), Neon)
-local title = createLabel(header, "THE ULTIMATE GENIUS MENU", UDim2.new(0, 65, 0, 12), UDim2.new(0, 220, 0, 25), Neon)
-local subTitle = createLabel(header, "SUPREME ELITE MODS", UDim2.new(0, 65, 0, 36), UDim2.new(0, 120, 0, 15), Color3.new(1,1,1))
-subTitle.TextTransparency = 0.4
-
-local creditBar = Instance.new("Frame", f)
-creditBar.Size, creditBar.Position, creditBar.BackgroundColor3, creditBar.ZIndex = UDim2.new(0.9, 0, 0, 22), UDim2.new(0.05, 0, 0, 75), Color3.new(0,0,0), 6 round(creditBar, 4)
-local crText = createLabel(creditBar, "OWNER: THE GENIUS HACKER | PRICE: 1 KR", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), Neon)
-crText.TextSize = 10
-
--- [[ KILL SWITCH ]] --
-local xBtn = Instance.new("TextButton", f)
-xBtn.Size, xBtn.Position, xBtn.Text, xBtn.BackgroundColor3, xBtn.ZIndex = UDim2.new(0, 25, 0, 25), UDim2.new(1, -30, 0, 5), "X", Color3.fromRGB(150, 0, 0), 10
-xBtn.TextColor3, xBtn.TextScaled = Color3.new(1,1,1), true round(xBtn, 25)
-
-local scroll = Instance.new("ScrollingFrame", f)
-scroll.Size, scroll.Position, scroll.BackgroundTransparency, scroll.CanvasSize = UDim2.new(1, -20, 0.8, 0), UDim2.new(0, 10, 0.16, 0), 1, UDim2.new(0,0,18,0)
-scroll.ScrollBarThickness, scroll.ZIndex = 2, 6
-local layout = Instance.new("UIListLayout", scroll) layout.Padding, layout.HorizontalAlignment = UDim.new(0, 10), Enum.HorizontalAlignment.Center
-
--- [[ STATE ]] --
-local n, e, gd, fly, fS, hb, fb, ncd, infJump, enableJump, szHack = false, false, false, false, 50, false, false, false, false, false, false
-
-local function btn(txt, clr, fnc)
-local b = Instance.new("TextButton", scroll)
-b.Size, b.Text, b.BackgroundColor3 = UDim2.new(0.95, 0, 0, 35), txt, clr
-b.TextColor3, b.TextScaled, b.ZIndex = Color3.new(1,1,1), true, 7 round(b)
-b.MouseButton1Click:Connect(function() fnc(b) end) return b
-end
-
-local function dynamicBox(label, defaultVal)
-local i = Instance.new("TextBox", scroll)
-i.Size, i.PlaceholderText, i.Text = UDim2.new(0.95, 0, 0, 32), label, label..": "..defaultVal
-i.BackgroundColor3, i.TextColor3, i.TextScaled, i.ZIndex = Color3.new(0.05,0.05,0.05), Color3.new(1,1,1), true, 7 round(i)
-i.FocusLost:Connect(function() if i.Text == "" then i.Text = label..": "..defaultVal end end)
-return i
-end
-
-local function getVal(box) return tonumber(box.Text:match("%d+")) or 0 end
-
--- [[ BUTTON LIST ]] --
-btn("COPY DISCORD SHOP", Color3.fromRGB(88, 101, 242), function(b)
-setclipboard("discord.gg/GeniusElite")
-b.Text = "COPIED!" task.wait(2) b.Text = "COPY DISCORD SHOP"
-end)
-
-btn("SKY SAFE: OFF", Color3.fromRGB(200, 150, 0), function(b)
-szHack = not szHack
-b.Text = szHack and "SKY SAFE: ON" or "SKY SAFE: OFF"
-local hrp = lp.Character and lp.Character:FindFirstChild("HumanoidRootPart")
-if not hrp then return end
-if szHack then
-lastPos = hrp.CFrame
-if not safePlatform then
-safePlatform = Instance.new("Part", workspace)
-safePlatform.Size = Vector3.new(20, 1, 20)
-safePlatform.Anchored = true
-safePlatform.Transparency = 0.5
-safePlatform.BrickColor = BrickColor.new("Neon orange")
-end
-safePlatform.CFrame = CFrame.new(lastPos.X, 5000, lastPos.Z)
-hrp.CFrame = safePlatform.CFrame + Vector3.new(0, 3, 0)
-else
-if lastPos then hrp.CFrame = lastPos end
-if safePlatform then safePlatform:Destroy() safePlatform = nil end
-end
-end)
-
-btn("GET TP TOOL", Color3.fromRGB(60, 60, 60), function()
-local t = Instance.new("Tool", lp.Backpack) t.Name, t.RequiresHandle = "GENIUS_TP", false
-t.Activated:Connect(function() if lp.Character:FindFirstChild("HumanoidRootPart") then lp.Character.HumanoidRootPart.CFrame = CFrame.new(mouse.Hit.Position + Vector3.new(0, 3, 0)) end end)
-end)
-
-btn("ESP: OFF", Color3.fromRGB(0, 80, 200), function(b) e = not e b.Text = e and "ESP: ON" or "ESP: OFF" end)
-
-btn("FULLBRIGHT: OFF", Color3.fromRGB(0, 100, 100), function(b)
-fb = not fb b.Text = fb and "FULLBRIGHT: ON" or "FULLBRIGHT: OFF"
-if fb then L.Ambient, L.Brightness = Color3.new(1,1,1), 2 else L.Ambient, L.Brightness = Color3.new(0.5,0.5,0.5), 1 end
-end)
-
-btn("ENABLE JUMP: OFF", Color3.fromRGB(0, 150, 0), function(b) enableJump = not enableJump b.Text = enableJump and "ENABLE JUMP: ON" or "ENABLE JUMP: OFF" end)
-local jpI = dynamicBox("Jump Power", "50")
-btn("SET JUMP POWER", Color3.fromRGB(0, 100, 0), function() if lp.Character:FindFirstChildOfClass("Humanoid") then lp.Character:FindFirstChildOfClass("Humanoid").JumpPower = getVal(jpI) end end)
-
-btn("INF JUMP: OFF", Color3.fromRGB(100, 0, 200), function(b) infJump = not infJump b.Text = infJump and "INF JUMP: ON" or "INF JUMP: OFF" end)
-
-local wsI = dynamicBox("Walkspeed", "16")
-btn("SET SPEED", Color3.fromRGB(150, 0, 0), function() if lp.Character:FindFirstChild("Humanoid") then lp.Character.Humanoid.WalkSpeed = getVal(wsI) end end)
-
-local fI = dynamicBox("Fly Speed", "50")
-btn("FLY: OFF", Color3.fromRGB(40,40,40), function(b) fly = not fly fS = getVal(fI) b.Text = fly and "FLY: ON" or "FLY: OFF" if lp.Character:FindFirstChild("Humanoid") then lp.Character.Humanoid.PlatformStand = fly end end)
-
-btn("NO COOLDOWN: OFF", Color3.fromRGB(120, 0, 120), function(b) ncd = not ncd b.Text = ncd and "NO COOLDOWN: ON" or "NO COOLDOWN: OFF" end)
-
-local hbI = dynamicBox("Hitbox", "20")
-btn("HITBOX: OFF", Color3.fromRGB(40,40,40), function(b) hb = not hb b.Text = hb and "HITBOX: ON" or "HITBOX: OFF" end)
-
-btn("NOCLIP: OFF", Color3.fromRGB(40,40,40), function(b) n = not n b.Text = n and "NOCLIP: ON" or "NOCLIP: OFF" end)
-btn("GOD: OFF", Color3.fromRGB(40,40,40), function(b) gd = not gd b.Text = gd and "GOD: ON" or "GOD: OFF" end)
-
--- [[ KILL SWITCH ]] --
-xBtn.MouseButton1Click:Connect(function()
-active = false
-if safePlatform then safePlatform:Destroy() end
-if lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") then
-lp.Character.Humanoid.WalkSpeed, lp.Character.Humanoid.JumpPower, lp.Character.Humanoid.PlatformStand = 16, 50, false
-end
-for _, plr in pairs(P:GetPlayers()) do if plr.Character and plr.Character:FindFirstChild("Highlight") then plr.Character.Highlight:Destroy() end end
-g:Destroy()
-end)
-
--- [[ CORE LOGIC ]] --
-U.JumpRequest:Connect(function()
-if active and (infJump or enableJump) and lp.Character:FindFirstChildOfClass("Humanoid") then
-lp.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
-end
-end)
-
-R.Heartbeat:Connect(function()
-if not active then return end
-local c = lp.Character local hum = c and c:FindFirstChildOfClass("Humanoid")
-local hrp = c and c:FindFirstChild("HumanoidRootPart")
-if not hrp or not hum then return end
-
-if enableJump then
-hum:SetStateEnabled(Enum.HumanoidStateType.Jumping, true)
-if hum.JumpPower <= 0 then hum.JumpPower = getVal(jpI) end
-end
-
-if fly then
-local dir = Vector3.new(0,0,0) local cam = workspace.CurrentCamera.CFrame
-if U:IsKeyDown(Enum.KeyCode.W) then dir = dir + cam.LookVector end
-if U:IsKeyDown(Enum.KeyCode.S) then dir = dir - cam.LookVector end
-if U:IsKeyDown(Enum.KeyCode.A) then dir = dir - cam.RightVector end
-if U:IsKeyDown(Enum.KeyCode.D) then dir = dir + cam.RightVector end
-if U:IsKeyDown(Enum.KeyCode.Space) then dir = dir + Vector3.new(0,1,0) end
-if U:IsKeyDown(Enum.KeyCode.LeftShift) then dir = dir - Vector3.new(0,1,0) end
-hrp.Velocity = dir.Unit * fS
-if dir.Magnitude == 0 then hrp.Velocity = Vector3.new(0,0,0) end
-end
-
-if n then for _, v in pairs(c:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide = false end end end
-if gd then hum.Health = 100 end
-if ncd then
-for _, t in pairs(lp.Backpack:GetChildren()) do if t:IsA("Tool") then t.Enabled = true end end
-for _, t in pairs(c:GetChildren()) do if t:IsA("Tool") then t.Enabled = true end end
-end
-end)
-
--- Visual Loop
-task.spawn(function()
-while task.wait(0.1) do
-if not active then break end
-local clr = Color3.fromHSV(tick() % 5 / 5, 1, 1)
-fO.BackgroundColor3, title.TextColor3, crText.TextColor3 = clr, clr, clr
-
-for _, plr in pairs(P:GetPlayers()) do
-if plr ~= lp and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
-local char = plr.Character
-local hrp = char.HumanoidRootPart
-hrp.Size = hb and Vector3.new(getVal(hbI), getVal(hbI), getVal(hbI)) or Vector3.new(2,2,1)
-hrp.Transparency = hb and 0.7 or 0
-hrp.CanCollide = not hb
-if e then
-local hi = char:FindFirstChild("Highlight") or Instance.new("Highlight", char)
-hi.FillColor = plr.TeamColor.Color
-else
-if char:FindFirstChild("Highlight") then char.Highlight:Destroy() end
-end
-end
-end
-end
-end)
-
-U.InputBegan:Connect(function(i, p) if not p and i.KeyCode == Enum.KeyCode.RightControl then f.Visible = not f.Visible end end)
-
-
-    </code></pre>
-  </div>
-
-  <div class="script-box">
-    <h2>Basic Leaderstats Script</h2>
-
-    <pre><code>
-game.Players.PlayerAdded:Connect(function(player)
-    local leaderstats = Instance.new("Folder")
-    leaderstats.Name = "leaderstats"
-    leaderstats.Parent = player
-
-    local coins = Instance.new("IntValue")
-    coins.Name = "Coins"
-    coins.Value = 0
-    coins.Parent = leaderstats
-end)
+        dropzones.forEach(zone => {
+            zone.addEventListener('dragover', e => {
+                // Necessary to allow dropping
+                e.preventDefault();
+                const draggingItem = document.querySelector('.dragging');
+                zone.appendChild(draggingItem);
+            });
+        });
+    </script>
+</body>
+</html>
