@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Music Website</title>
+  <title>Roblox Script Education Hub</title>
   <style>
     * {
       margin: 0;
@@ -13,126 +13,102 @@
     }
 
     body {
-      background: #111;
+      background: #0f0f0f;
       color: white;
-      line-height: 1.6;
+      padding: 30px;
     }
 
     header {
-      background: linear-gradient(135deg, #1e1e1e, #333);
-      padding: 60px 20px;
       text-align: center;
+      margin-bottom: 40px;
     }
 
     header h1 {
       font-size: 3rem;
       margin-bottom: 10px;
+      color: #00bfff;
     }
 
     header p {
-      color: #ccc;
-      font-size: 1.1rem;
+      color: #bbbbbb;
     }
 
-    .songs {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      gap: 25px;
-    }
-
-    .song-card {
-      background: #1c1c1c;
+    .script-box {
+      background: #1a1a1a;
       border-radius: 16px;
-      padding: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      transition: transform 0.2s ease;
     }
 
-    .song-card:hover {
-      transform: translateY(-5px);
+    .script-box h2 {
+      margin-bottom: 15px;
+      color: #00bfff;
     }
 
-    .song-card h2 {
-      margin-bottom: 10px;
+    pre {
+      background: #101010;
+      padding: 15px;
+      border-radius: 12px;
+      overflow-x: auto;
+      color: #00ff99;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
-    audio {
-      width: 100%;
-      margin-top: 10px;
+    code {
+      white-space: pre-wrap;
+    }
+
+    .warning {
+      background: #222;
+      border-left: 5px solid orange;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      color: #ddd;
     }
 
     footer {
       text-align: center;
-      padding: 30px;
+      margin-top: 40px;
       color: #888;
       font-size: 0.9rem;
-    }
-
-    .socials {
-      margin-top: 15px;
-    }
-
-    .socials a {
-      color: white;
-      text-decoration: none;
-      margin: 0 10px;
-      transition: color 0.2s;
-    }
-
-    .socials a:hover {
-      color: #1db954;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Your Artist Name</h1>
-    <p>Listen to my latest music</p>
-
-    <div class="socials">
-      <a href="#">Instagram</a>
-      <a href="#">YouTube</a>
-      <a href="#">Spotify</a>
-    </div>
+    <h1>Roblox Script Education Hub</h1>
+    <p>Learn Lua scripting for Roblox Studio</p>
   </header>
 
-  <section class="songs">
+  <div class="warning">
+    <strong>hello</strong> These scripts are new so may be broken.
+  </div>
 
-    <div class="song-card">
-      <h2>Song One</h2>
-      <p>Your first track description.</p>
-      <audio controls>
-        <source src="songs/song1.mp3" type="audio/mpeg">
-        Your browser does not support audio.
-      </audio>
-    </div>
+  <div class="script-box">
+    <h2>Simple Part Color Script</h2>
 
-    <div class="song-card">
-      <h2>Song Two</h2>
-      <p>Your second track description.</p>
-      <audio controls>
-        <source src="songs/song2.mp3" type="audio/mpeg">
-        Your browser does not support audio.
-      </audio>
-    </div>
+    <pre><code>
+local part = script.Parent
 
-    <div class="song-card">
-      <h2>Song Three</h2>
-      <p>Your third track description.</p>
-      <audio controls>
-        <source src="songs/song3.mp3" type="audio/mpeg">
-        Your browser does not support audio.
-      </audio>
-    </div>
+part.BrickColor = BrickColor.Random()
+    </code></pre>
+  </div>
 
-  </section>
+  <div class="script-box">
+    <h2>Basic Leaderstats Script</h2>
 
-  <footer>
-    © 2026 Your Artist Name — All Rights Reserved
-  </footer>
+    <pre><code>
+game.Players.PlayerAdded:Connect(function(player)
+    local leaderstats = Instance.new("Folder")
+    leaderstats.Name = "leaderstats"
+    leaderstats.Parent = player
 
-</body>
-</html>
+    local coins = Instance.new("IntValue")
+    coins.Name = "Coins"
+    coins.Value = 0
+    coins.Parent = leaderstats
+end)
