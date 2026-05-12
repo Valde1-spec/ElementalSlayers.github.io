@@ -1,42 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Music Website</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #111;
+      color: white;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e1e1e, #333);
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #ccc;
+      font-size: 1.1rem;
+    }
+
+    .songs {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      gap: 25px;
+    }
+
+    .song-card {
+      background: #1c1c1c;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .song-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .song-card h2 {
+      margin-bottom: 10px;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .socials {
+      margin-top: 15px;
+    }
+
+    .socials a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+
+    .socials a:hover {
+      color: #1db954;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Signup</h1>
+  <header>
+    <h1>Your Artist Name</h1>
+    <p>Listen to my latest music</p>
 
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">Spotify</a>
+    </div>
+  </header>
 
-<button onclick="signup()">Create Account</button>
+  <section class="songs">
 
-<script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+    <div class="song-card">
+      <h2>Song One</h2>
+      <p>Your first track description.</p>
+      <audio controls>
+        <source src="songs/song1.mp3" type="audio/mpeg">
+        Your browser does not support audio.
+      </audio>
+    </div>
 
-const supabase = createClient(
-  'https://kxofnkbhyldonyoihodp.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4b2Zua2JoeWxkb255b2lob2RwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0MjI4NzcsImV4cCI6MjA5Mzk5ODg3N30.0oXdXG73LOmpv_gfthQzgnVX5k5ULVPKgy-sC8-KK54'
-)
+    <div class="song-card">
+      <h2>Song Two</h2>
+      <p>Your second track description.</p>
+      <audio controls>
+        <source src="songs/song2.mp3" type="audio/mpeg">
+        Your browser does not support audio.
+      </audio>
+    </div>
 
-window.signup = async function () {
+    <div class="song-card">
+      <h2>Song Three</h2>
+      <p>Your third track description.</p>
+      <audio controls>
+        <source src="songs/song3.mp3" type="audio/mpeg">
+        Your browser does not support audio.
+      </audio>
+    </div>
 
-  const email = document.getElementById('email').value
-  const password = document.getElementById('password').value
+  </section>
 
-  const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password
-  })
-
-  if (error) {
-    alert(error.message)
-  } else {
-    alert('Check your email!')
-  }
-}
-</script>
+  <footer>
+    © 2026 Your Artist Name — All Rights Reserved
+  </footer>
 
 </body>
 </html>
