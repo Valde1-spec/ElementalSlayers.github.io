@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Tier Maker</title>
+    <title>Blox Fruits Tier Maker</title>
     <style>
-        :root {
-            --bg-color: #1a1a1a;
-            --tier-label-width: 100px;
-        }
-
         body {
-            font-family: sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
             color: white;
             display: flex;
             flex-direction: column;
@@ -20,39 +15,41 @@
             padding: 20px;
         }
 
-        /* Tier Container */
-        #tier-container {
-            width: 100%;
+        h1 { color: #ffcc00; text-shadow: 2px 2px #000; }
+
+        .tier-container {
+            width: 90%;
             max-width: 800px;
-            border: 2px solid #333;
+            background: #333;
+            border: 2px solid #000;
+            margin-bottom: 20px;
         }
 
         .tier-row {
             display: flex;
             min-height: 80px;
-            border-bottom: 1px solid #333;
-            background-color: #222;
+            border-bottom: 1px solid #444;
         }
 
         .tier-label {
-            width: var(--tier-label-width);
+            width: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: #000;
             text-align: center;
-            padding: 5px;
-            cursor: default;
+            font-size: 1.2rem;
         }
 
-        /* Tier Colors */
+        /* Farver til Tiers */
         .s-tier { background-color: #ff7f7f; }
         .a-tier { background-color: #ffbf7f; }
         .b-tier { background-color: #ffff7f; }
         .c-tier { background-color: #7fff7f; }
+        .f-tier { background-color: #7f7fff; }
 
-        .tier-dropzone {
+        .tier-content {
             flex-grow: 1;
             display: flex;
             flex-wrap: wrap;
@@ -60,99 +57,94 @@
             gap: 10px;
         }
 
-        /* Draggable Items */
-        .item-bank {
-            margin-top: 30px;
-            width: 100%;
+        .fruit-bank {
+            width: 90%;
             max-width: 800px;
-            min-height: 100px;
-            background-color: #333;
+            background: #222;
             padding: 20px;
+            border: 2px dashed #555;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            border-radius: 8px;
+            justify-content: center;
         }
 
-        .draggable {
+        .fruit {
             width: 60px;
             height: 60px;
             background-color: #555;
+            border: 2px solid #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: grab;
-            user-select: none;
-            font-size: 12px;
-            border: 2px solid #fff;
+            font-size: 0.7rem;
             text-align: center;
+            border-radius: 5px;
+            user-select: none;
         }
 
-        .draggable:active {
-            cursor: grabbing;
-        }
-
-        .dragging {
-            opacity: 0.5;
-        }
+        .fruit:active { cursor: grabbing; }
     </style>
 </head>
 <body>
 
-    <h1>Custom Tier List</h1>
+    <h1>Blox Fruits Tier List</h1>
 
-    <div id="tier-container">
+    <div class="tier-container">
         <div class="tier-row">
             <div class="tier-label s-tier">S</div>
-            <div class="tier-dropzone"></div>
+            <div class="tier-content" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
         <div class="tier-row">
             <div class="tier-label a-tier">A</div>
-            <div class="tier-dropzone"></div>
+            <div class="tier-content" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
         <div class="tier-row">
             <div class="tier-label b-tier">B</div>
-            <div class="tier-dropzone"></div>
+            <div class="tier-content" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
         <div class="tier-row">
             <div class="tier-label c-tier">C</div>
-            <div class="tier-dropzone"></div>
+            <div class="tier-content" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+        <div class="tier-row">
+            <div class="tier-label f-tier">F</div>
+            <div class="tier-content" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
     </div>
 
-    <h3>Items</h3>
-    <div class="item-bank tier-dropzone" id="bank">
-        <div class="draggable" draggable="true">Pizza</div>
-        <div class="draggable" draggable="true">Tacos</div>
-        <div class="draggable" draggable="true">Sushi</div>
-        <div class="draggable" draggable="true">Burgers</div>
-        <div class="draggable" draggable="true">Salad</div>
+    <h3>Frugter (Træk dem op)</h3>
+    <div class="fruit-bank" id="bank" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <div class="fruit" draggable="true" ondragstart="drag(event)" id="kitsune">Kitsune</div>
+        <div class="fruit" draggable="true" ondragstart="drag(event)" id="leopard">Leopard</div>
+        <div class="fruit" draggable="true" ondragstart="drag(event)" id="dough">Dough</div>
+        <div class="fruit" draggable="true" ondragstart="drag(event)" id="dragon">Dragon</div>
+        <div class="fruit" draggable="true" ondragstart="drag(event)" id="magma">Magma</div>
+        <div class="fruit" draggable="true" ondragstart="drag(event)" id="buddha">Buddha</div>
+        <div class="fruit" draggable="true" ondragstart="drag(event)" id="ice">Ice</div>
+        <div class="fruit" draggable="true" ondragstart="drag(event)" id="rocket">Rocket</div>
     </div>
 
     <script>
-        const draggables = document.querySelectorAll('.draggable');
-        const dropzones = document.querySelectorAll('.tier-dropzone');
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
 
-        draggables.forEach(draggable => {
-            // Start Dragging
-            draggable.addEventListener('dragstart', () => {
-                draggable.classList.add('dragging');
-            });
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
 
-            // End Dragging
-            draggable.addEventListener('dragend', () => {
-                draggable.classList.remove('dragging');
-            });
-        });
-
-        dropzones.forEach(zone => {
-            zone.addEventListener('dragover', e => {
-                // Necessary to allow dropping
-                e.preventDefault();
-                const draggingItem = document.querySelector('.dragging');
-                zone.appendChild(draggingItem);
-            });
-        });
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            // Sikrer at vi dropper i tier-content eller banken, ikke ovenpå en anden frugt
+            let target = ev.target;
+            if (target.classList.contains('tier-content') || target.id === 'bank') {
+                target.appendChild(document.getElementById(data));
+            }
+        }
     </script>
+
 </body>
 </html>
